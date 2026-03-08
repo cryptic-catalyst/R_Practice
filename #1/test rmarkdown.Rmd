@@ -1,0 +1,82 @@
+---
+title: "test rmarkdown"
+output: word_document
+date: "2026-03-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+``` {r}
+survey <- read.csv("C:/Users/USER/Desktop/R_practice/survey.csv")
+```
+
+install.packages("knitr")
+library(knitr)
+
+3^4
+7*4+2
+31/7
+31%/%7
+1.0025^30
+X <- 1:10
+mean(X)
+c(0,7,8)
+x<- c(0,7,8)
+num <- 5:20
+a.group <- c(num,x)
+a.group
+a.group[20]
+a.group[5]
+a.group[-5]
+x*3
+x^3
+y^x
+
+seq(1,21, by =2)
+rep(3,4)
+rep(seq(1,5), times=5) + rep(0:4, each=5)
+m<- matrix(1:6, nrow=2, ncol=3)
+m[1,2]
+m[4]
+m[1,0]
+m[1, ]
+
+dim(m)
+diag(m)
+m[2,3]
+rowSums(m)
+solve(m)
+
+array(1:24, c(3, 4,2))
+
+#dump function
+a <- c(2,3,4)
+dump("a","use.R")
+source("use.R")
+
+#dump function
+b <- c(2,3,4)
+dump("b","use.R")
+source("use.R")
