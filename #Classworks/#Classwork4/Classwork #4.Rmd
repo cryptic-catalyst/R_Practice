@@ -1,0 +1,87 @@
+---
+title: 'Generating data from random variables'
+output: word_document
+date: "2026-03-09"
+---
+
+# Generate data 
+
+In R we have these options:
+
+- d density
+- p for probability
+- q for quantiles 
+- r random generation of data
+
+to generate dta from the normal inivariate distribution we use **rnorm**
+
+```{r}
+#rnorm
+set.seed(7369)
+n <- 1000
+mu <- 0
+sigma <- 1
+z <- rnorm(n, mean = mu, sd = sigma)
+```
+### Data Description
+We summerize the relized data
+
+
+```{r}
+require(skimr)
+skim_without_charts(z)
+```
+
+We use the transformation
+$$
+Y_i = \mu + \sigma z, \:\ i=1, \ldots,n
+$$
+We have that $Y \sim N(\mu, \sigma^2)$
+Yi = mu + sigma Z
+
+We generate data related to height of a certain group of people where we except the average is around 140 with a standard deviation of about 6.
+
+```{r}
+y <- 140 + 6*z
+```
+Report the descriptive statistics
+```{r}
+skim_without_charts(y)
+```
+
+
+Report some figures and describe the data 
+
+```{r}
+hist(y, breaks =30,
+     main = "Realized values from Y~N(140,36)",
+     prob = TRUE,
+     xlim = c(110,173),
+     ylim = c(0,0.08),
+     ylab = "Density",
+     col = "yellow1")
+```
+
+*Comments expected on the shape and in particular highest frequencies and tails behavior reporting some observed values.* 
+
+## Plot
+
+Report some figures and describe the data: 
+
+### Histigram
+
+### Empirical cumulative distribution function
+
+```{r}
+plot(ecdf(y),
+     main = "Empirical cumulative distribution Y~N(140,36)")
+```
+
+*Fix some values of interest in the x-axis and reports some comments on the related observed probability.*
+
+### Quantile-quantile plot
+
+```{r}
+qqnorm(y, col = "blue", main="Y~N(140,36)")
+```
+
