@@ -80,3 +80,96 @@ source("use.R")
 b <- c(2,3,4)
 dump("b","use.R")
 source("use.R")
+
+x<- c(1,2,3)
+y<- c(1,2,3)
+my <- data.frame(x,y)
+my$x
+
+test.df <- read.table("C:/test.dat",header = T)
+
+a<-c(3,6,9)
+a>4
+
+xy <- c(3,6,9,19,29,30,21, 2,1,5)
+xy > 4 
+
+x <- c(3, 6, 9, 10, 20, 30, 21, 2, 1, 4)
+which((x > 2) & (x < 20))
+z <- which((x < 2) | (x > 7))
+z
+x[Z]
+
+b <- c(4, 6, 8)
+a < b
+a[a < b]
+
+x<- c(0:10, 50)
+mean(x)
+
+x<- 3
+if(x<2) y<-2 * x else y<- 0
+y
+
+for (i in 1:9) print(1:i)
+
+Fibonacci <- numeric(12)
+  Fibonacci[1] <- Fibonacci[2] <- 1
+  for (i in 3:12) {
+  Fibonacci[i] <- Fibonacci[i - 2] + Fibonacci[i - 1]
+}
+Fibonacci
+
+Fib1 <- 1
+Fib2 <- 1
+Fibonacci <- 1
+while (Fib2 < 300) {
+Fibonacci <- c(Fibonacci, Fib2)
+oldFib2 <- Fib2
+Fib2 <- Fib1 + Fib2
+Fib1 <- oldFib2
+}
+Fibonacci
+
+Eratosthenes <- function(n) {
+if (n >= 2) {
+sieve <- seq(2, n)
+prime <- c()
+for (i in seq(2, n)) {
+if (any(sieve == i)) {
+prime <- c(prime, i)
+sieve <- c(sieve[(sieve%%i) != 0], i)
+}
+}
+return(prime)
+}
+else {
+stop("the initial value must be at least 2")
+}
+}
+Eratosthenes(50)
+
+x <- c(12, 15, 20, 14, 16, 10, 8, 15)
+a <- hist(x,
+main = 'Histogram of x',
+ylab = "Absolute frequencies")
+a
+
+x <- seq(1, 10)
+y <- x^2 - 10 * x
+plot(x, y)
+plot(x, y, type = "l")
+
+curve(sin, from = 0, to = 6 * pi)
+
+
+par(mfrow = c(1, 2))
+x <- c(12, 15, 20, 14, 16, 10, 8, 15)
+hist(x,
+main = "",
+ylab = 'Absolute frequencies', col = "blue")
+x <- seq(1, 10)
+y = x^2 - 10*x
+plot(x, y)
+
+
