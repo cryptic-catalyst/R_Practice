@@ -1,0 +1,21 @@
+---
+title: '#Example5'
+output:
+  word_document: default
+  html_document: default
+date: "2026-03-13"
+---
+
+# covariance & correlations 
+
+```{r}
+load("D:/R Practice/#Classworks/#Example5/ratings.Rdata")
+
+```
+
+#Save the R code in a separate file
+
+```{r}
+knitr:: purl("D:/R Practice/#Classworks/#Example5/#Example5.Rmd","#Example5.R", documentation =1)
+```
+
