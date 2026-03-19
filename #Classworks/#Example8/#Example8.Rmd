@@ -1,0 +1,72 @@
+---
+title: "Example of likelihood"
+output:
+  word_document: default
+  html_document: default
+date: "2026-03-18"
+---
+
+Example on the slides
+We write the realizations of bounds having a return grater then 3\%
+
+```{r}
+x <- c(1,0,1)
+p_hat <- mean(x);
+p_hat
+```
+maximum likelihood estimate of p
+we write the likelihood function
+
+
+```{r}
+likelihood <- function(p, data)
+{
+  prod(p^data * (1-p)^(1-data))
+}
+```
+Now, we generate a sequence of values of p
+
+```{r}
+p_val <- seq(0.01, 0.99, length.out = 100)
+summary(p_val)
+
+```
+
+calculate likelihood
+
+```{r}
+lik_vals <- sapply(p_val, likelihood , data =x)
+```
+We look for maximum value
+
+```{r}
+pMLE <- p_val[which.max(lik_vals)];
+pMLE
+```
+The log-likelihood is the following 
+
+```{r}
+logLik <- function(p,data)
+          {
+            sum(data*log(p)+(1-data)*log(1-p))
+          }
+```
+
+```{r}
+loglik_val <- sapply(p_val, logLik, data =x)
+```
+
+```{r}
+pMLElog <- p_val[which.max(loglik_val)];
+pMLElog
+```
+Plot of likelihood
+
+```{r}
+plot(p_val, loglik_val,
+     type ="l",
+     xlab ="p",
+     ylab ="log(L(p)")
+abline(v= mean(x), col = "red", lty =2)
+```
+
