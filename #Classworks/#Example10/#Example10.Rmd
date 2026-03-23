@@ -1,0 +1,46 @@
+---
+title: "Multiple linear regression model"
+output:
+  word_document: default
+  html_document: default
+date: "2026-03-23"
+---
+
+```{r}
+load(r"(D:\R Practice\#Classworks\#Example10\profits.Rdata)")
+```
+
+y: profit margins
+x1: revenues
+x2: share of investment
+
+```{r}
+pairs(profits,
+      panel = panel.smooth,
+      main = "scatterplot matrix")
+```
+We estimate the model using the lm function
+
+```{r}
+lm1 <- lm(y~ x1+x2, data = profits)
+# Add ( ) around your formula and data
+ml2 <- lm(y ~ ., data = profits)
+```
+
+# This tells R to actually open the package you just installed
+library(scatterplot3d)
+# Now your 3D plot will work!
+
+We make a short description of the results through the summary function
+
+```{r}
+ex1 <- scatterplot3d(profits[,2],
+                     profits[,3],
+                     profits[,1],
+                     pch = 20)
+ex1$plane3d(lm1, col = "red")
+```
+
+
+
+  
