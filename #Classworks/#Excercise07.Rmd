@@ -1,0 +1,26 @@
+---
+title: '#Excercise07'
+output: html_document
+date: "2026-03-27"
+---
+#Solution 7.1
+#We generate 3000 data points from a bivariate Guassian distribution.
+
+```{r}
+library(mvtnorm)
+require(mvtnorm)
+
+mu <- c(0, 0)
+sigma <- matrix(c(9,0,0,9), ncol =2, byrow = T)
+x <-rmvnorm(n=3000, mean =mu, sigma = sigma)
+
+summary(x)
+```
+#Comment- Write by yourself
+
+#Solution 7.2
+
+```{r}
+plot(x[,1], x[,2], main ="Scatter Plot", asp=2)
+```
+

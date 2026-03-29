@@ -1,0 +1,42 @@
+---
+title: '#Excercise3'
+output:
+  word_document: default
+  html_document: default
+date: "2026-03-27"
+---
+
+#Solution-1
+
+In this point we will draw 1000 realizations from a Gaussian random variable with mean equal to 7 and variance equal to 02
+
+```{r}
+set.seed(130)
+x <- rnorm(n=1000, mean =7, sd=sqrt(2))
+
+summary(x)
+```
+
+We observed that the empirical mean value is very close to the theoretical one (7).  It is also very clear to empirical median, which is a hint of a symmetric distribution. Also the relative position of the first and third quartiles (which are equally spaced with respect to the central point) suggests that the distribution is equally symmetric.
+
+```{r}
+sd(x)
+```
+
+We now plot the histogram of the distribution. 
+
+```{r}
+hist(x, breaks =10, main="Histogram")
+```
+#ECDF- Empirical Cumulative Distribution Function 
+
+```{r}
+plot(ecdf(x), do.points =T, main="ECDF")
+```
+
+```{r}
+qqnorm(x, main ="QQ-plot")
+qqline(x)
+```
+
+
