@@ -1,0 +1,22 @@
+---
+title: '#Assignment1'
+output: html_document
+date: "2026-04-04"
+---
+
+#Ans to the Question No-1
+
+We have to find out the Mean, Median, Mode, Standard Deviation etc. Descriptive Statistics from given Air database for NO2 and PM10 concentrations. 
+
+```{r}
+load("D:/R Practice/#Classworks/#Assignment1/air.RData")
+library(skimr)
+skim_without_charts(air)
+```
+Based on the descriptive statistics, the average concentration of NO2 is 43.938 $\mu g/m^3$ with a median of 42.00, indicating a relatively symmetric distribution. However, the high standard deviation (22.313) suggests significant variability in NO2 levels across different monitoring stations.  
+
+For PM10, the mean is 24.038 $\mu g/m^3$ and the median is 24.15, which are very close, suggesting that the PM10 data is also symmetrically distributed. The lower standard deviation of 5.533 indicates that PM10 levels are more consistent across the region compared to NO2. In an environmental context, these values help identify whether the average air quality meets safety regulations.
+
+#Ans to the Question No-2
+
+
