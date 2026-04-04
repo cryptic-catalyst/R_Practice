@@ -1,0 +1,42 @@
+---
+title: '#Example2'
+output: html_document
+date: "2026-04-03"
+---
+
+Import or Load the data into the workspace
+
+```{r}
+load("D:/R Practice/#Classworks/#Example2/profits.Rdata")
+```
+
+The last 6 rows of the data are the following 
+
+```{r}
+round(tail(profits),3)
+```
+The data are related to 500 units and there are three continuous variables denoted ad y, x1 and x2 
+
+
+We provide description of the observations:
+```{r}
+library(skimr)
+skim_without_charts(profits)
+```
+
+We visualize the realizations in a scatterplot of each single variable
+
+```{r}
+plot(profits$y, ylab="Profits",
+     type="p",
+     ylim = c(-11, 14),
+     pch = 16, cex = 0.4,
+     col="red")
+     abline(h = 0)
+
+```
+Empirical density 
+
+```{r}
+plot(density(profits$y))
+```

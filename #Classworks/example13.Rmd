@@ -1,0 +1,188 @@
+---
+title: "Multiple linear regression model"
+output: word_document
+date: "2026-03-23"
+---
+
+```{r}
+load("profits.Rdata")
+```
+
+y: profit margins
+x1: revenues 
+x2: share of investments
+
+```{r}
+pairs(profits, 
+      panel = panel.smooth,
+        main = "Scatterplot matrix ")
+```
+We estimate the model using the lm function 
+
+```{r}
+lm1 <- lm(y ~ x1 + x2, data = profits)
+lm1 <- lm(y ~ ., data = profits)
+
+```
+
+
+We make a short description of the results through the summary function
+
+```{r}
+summary(lm1)
+```
+
+```{r}
+require(scatterplot3d)
+ex1 <- scatterplot3d(profits[,2],
+                     profits[,3],
+                     profits[,1],
+                     type = "h", 
+                     pch = 20)
+ex1$plane3d(lm1, col = "red")
+```
+
+
+
+# Residuals
+
+
+```{r}
+lm1$residuals[1]
+```
+
+
+Observed values $y_i$
+
+```{r}
+profits$y[1]
+```
+Fitted value $\hat{y}_i$
+
+```{r}
+lm1$fitted.values[1]
+```
+
+
+$z_i = y_i -  \hat{y}_i$
+
+```{r}
+profits$y[1] - lm1$fitted.values[1]
+```
+
+
+## Detection of influential observations
+
+We plot residuals alone
+
+
+```{r}
+plot(lm1$residuals, pch = 16, cex = 0.4)
+```
+
+
+## Residuals against fitted value 
+
+```{r}
+plot(lm1$fitted.values, lm1$residuals, pch = 16, cex = 0.4)
+```
+
+
+
+## Residuals against covariate 
+
+```{r}
+plot(profits$x1, lm1$residuals, pch = 16, cex = 0.4)
+```
+
+
+```{r}
+library(car)
+residualPlots(lm1)
+```
+
+
+# Empirical distribution function of residuals
+
+We plot also the residuals to see their distribution
+
+```{r}
+plot(ecdf(lm1$residuals))
+```
+
+
+We compare the shape of the empirical function with a theoretical distribution of reference which is the student t distribution with (n-p-1) degrees of freedom 
+
+```{r}
+plot(ecdf(lm1$residuals))
+n <- dim(profits)[1]
+p <- 2
+df <- (n - p -1)
+curve(pt(x,df), col = "red", add = T)
+```
+
+# Leverage points
+
+We are going to calculate first the values of the H matrix
+
+```{r}
+lev <- hatvalues(lm1)
+skimr::skim_without_charts(lev)
+```
+
+From description of the values there are no problems of leverages since they are ranging near by zero and the variability is low.
+
+The plot is done with the function inside the library named faraway
+
+```{r}
+require(faraway)
+halfnorm(lev)
+```
+
+No leverage values we can however inspect the observations referred to the highest values related to id 148 and 409
+
+```{r}
+profits[148,]
+profits[409,]
+```
+
+# Cook's distance
+
+```{r}
+cook <- cooks.distance(lm1)
+skimr::skim_without_charts(cook)
+```
+
+```{r}
+halfnorm(cook, pch = 16, cex = 0.4)
+```
+
+If you detect leverages, and/or outliers and/or influential values check the id in the data and try to estimate the model removing once each time.
+
+
+```{r}
+summary(lm1)
+```
+
+so $s^2$ is 
+```{r}
+0.09639^2
+```
+
+
+Realized estimate of the variance supposed for the error terms in the model.
+
+```{r}
+
+
+```
+
+
+
+
+
+
+
+
+
+
