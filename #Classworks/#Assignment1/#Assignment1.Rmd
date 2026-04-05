@@ -1,5 +1,5 @@
 ---
-title: '#Assignment1'
+title: '#Assignment1(Prepared By- ID. 947961)'
 output: html_document
 date: "2026-04-04"
 ---
@@ -19,4 +19,101 @@ For PM10, the mean is 24.038 $\mu g/m^3$ and the median is 24.15, which are very
 
 #Ans to the Question No-2
 
+We have to prepare a QQ Plot for PM10 variable and discuss the plausibility of normality. 
+
+```{r}
+qqnorm(air$PM10,
+       main= "Normal Q-Q plot for PM10 Concentration",
+       xlab= "Theoritical Quantities",
+       ylab= "Sample Quantities",
+       pch = 16,
+       col= "navyblue"
+       )
+```
+Based on the visual inspection of the Q-Q plot, the assumption of normality for the PM10 variable is plausible.
+
+#Ans to the Question No-3
+
+Presenting Data on Scatterplot & discussion on the strength NO2 and PM10 concentration.
+
+```{r}
+  plot(air$NO2, air$PM10,
+     main = "Scatterplot of NO2 vs PM10 Concentrations",
+     xlab = "Nitrogen Dioxide (NO2) [ug/m3]", 
+     ylab = "Particulate Matter (PM10) [ug/m3]",
+     pch = 16, col = "darkgreen"
+       )
+```
+
+The scatterplot shows a weak to moderate association between NO2 and PM10.
+
+
+```{r}
+cor(air$NO2, air$PM10)
+```
+
+The calculated linear correlation coefficient is approximately 0.3993398 ` 0.40
+
+This moderate correlation suggests that while NO2 and PM10 may share some common emission sources like traffic, other independent factors also influence their individual concentrations.
+
+#Ans to the Question No-4
+
+Applying nonparametric bootstrap using B=2000 replication to estimate Standard Error.
+
+```{r}
+set.seed(123)
+B <- 2000
+boot_cor <- numeric(B)
+for(i in 1:B) {
+  sample_indices <- sample(1:nrow(air), replace = TRUE)
+  sample_data <- air[sample_indices, ]
+  boot_cor[i] <- cor(sample_data$NO2, sample_data$PM10)
+}
+se_boot <- sd(boot_cor)
+round(se_boot, 4)
+```
+The estimated bootstrap standard error is 0.1354
+The standard error is relatively small compared to the point estimate of 0.3993. This indicates that while there is some variability in the data, the estimated correlation coefficient is reasonably stable across the resampled datasets.
+
+#Ans to the Question No-5
+
+Computing 90% Confidence Interval
+
+```{r}
+conf_interval <- quantile(boot_cor, probs = c(0.05, 0.95))
+round(conf_interval, 4)
+```
+Using the bootstrap quantile method, the 90% confidence interval for the linear correlation coefficient is [0.1644, 0.6133].
+
+the entire interval is positive and does not contain zero, we can conclude that there is a statistically significant positive linear association between NO2 and PM10 concentrations at the 90% confidence level.
+
+#Ans to the Question No-6
+
+Histogram of the bootstrap distribution of the correlation coefficient.
+
+```{r}
+# Histogram
+hist(boot_cor, breaks = 25, col = "lightblue", 
+     main = "Bootstrap Distribution of Correlation Coefficient",
+     xlab = "Correlation Coefficient")
+
+# Vertical lines for specific values
+abline(v = 0.3993, col = "red", lwd = 2)                # Original Estimate (from Q3)
+abline(v = mean(boot_cor), col = "blue", lty = 2, lwd = 2) # Bootstrap Mean
+abline(v = conf_interval, col = "darkgreen", lty = 3, lwd = 2) # 90% CI Bounds
+
+# Legend
+legend("topright", 
+       legend = c("Original Estimate", "Bootstrap Mean", "90% CI Bounds"),
+       col = c("red", "blue", "darkgreen"), 
+       lty = c(1, 2, 3), lwd = 2, cex = 0.8)
+```
+
+Bias: The original estimate and bootstrap mean are nearly identical, showing negligible bias.
+
+
+Bounds: The green vertical lines represent the 90% confidence interval bounds of 0.1644 and 0.6133.
+
+
+Conclusion: The plot confirms that the correlation is significantly greater than zero.
 
