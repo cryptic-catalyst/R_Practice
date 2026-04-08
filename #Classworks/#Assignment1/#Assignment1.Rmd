@@ -1,6 +1,7 @@
 ---
-title: '#Assignment1(Prepared By- ID. 947961)'
-output: html_document
+title: "#Assignment1(Prepared By- ID. 947961)"
+output:
+  pdf_document: default
 date: "2026-04-04"
 ---
 
@@ -116,4 +117,5 @@ Bounds: The green vertical lines represent the 90% confidence interval bounds of
 
 
 Conclusion: The plot confirms that the correlation is significantly greater than zero.
+
 

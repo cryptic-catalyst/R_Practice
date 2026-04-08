@@ -1,0 +1,68 @@
+---
+title: '#Example15'
+output: html_document
+date: "2026-04-08"
+---
+
+# Variable selection
+
+Load the body measurements 
+
+```{r}
+load("D:/R Practice/#Classworks/#Example15/body.Rdata")
+```
+
+the research question is to explain the response which is brozek that is the percentage of the body fat calculated according to Brozek eqution.
+
+```{r}
+require(skimr)
+skim_without_charts(body)
+```
+
+
+```{r}
+pairs(body[,1:10], panel = panel.smooth)
+```
+```{r}
+pairs(body[,7:10], panel = panel.smooth)
+```
+
+#Variance inflation factor
+
+it required th output of the linear regression model using the full model 
+
+```{r}
+require(faraway)
+modbody0 <- lm(brozek ~ ., body)
+vif(modbody0)
+```
+
+we can interprete the sqrt(120.31)=10.97 saying that the standard error for the beta coefficient related to weight is around 11 times larger than it would have been with collinearity.
+
+
+```{r}
+sqrt(120.312)
+```
+we are going to calculate vif without the variable weight 
+
+```{r}
+modbody1 <-  lm(brozek ~ ., body[,-3])
+vif(modbody1)
+```
+
+we set the best set of covariates using Akaike Information Criteron 
+
+```{r}
+step(modbody1)
+```
+
+```{r}
+step(modbody1, direction="forward")
+```
+
+```{r}
+modbody2 <- lm(brozek ~ age+height+neck+abdom+hip+thigh+wrist, data=body)
+summary(modbody2)
+```
+
+

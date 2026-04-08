@@ -1,0 +1,358 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={\#Assignment1(Prepared By- ID. 947961)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{\#Assignment1(Prepared By- ID. 947961)}
+\author{}
+\date{\vspace{-2.5em}2026-04-04}
+
+\begin{document}
+\maketitle
+
+\#Ans to the Question No-1
+
+We have to find out the Mean, Median, Mode, Standard Deviation etc.
+Descriptive Statistics from given Air database for NO2 and PM10
+concentrations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{load}\NormalTok{(}\StringTok{"D:/R Practice/\#Classworks/\#Assignment1/air.RData"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(skimr)}
+\FunctionTok{skim\_without\_charts}\NormalTok{(air)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Name & air \\
+Number of rows & 50 \\
+Number of columns & 2 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+numeric & 2 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1282}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0641}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0641}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p75
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p100
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+NO2 & 0 & 1 & 43.94 & 22.31 & 10.4 & 23.97 & 42.00 & 65.38 & 80.0 \\
+PM10 & 0 & 1 & 24.04 & 5.53 & 13.6 & 19.95 & 24.15 & 27.08 & 37.5 \\
+\end{longtable}
+
+Based on the descriptive statistics, the average concentration of NO2 is
+43.938 \(\mu g/m^3\) with a median of 42.00, indicating a relatively
+symmetric distribution. However, the high standard deviation (22.313)
+suggests significant variability in NO2 levels across different
+monitoring stations.
+
+For PM10, the mean is 24.038 \(\mu g/m^3\) and the median is 24.15,
+which are very close, suggesting that the PM10 data is also
+symmetrically distributed. The lower standard deviation of 5.533
+indicates that PM10 levels are more consistent across the region
+compared to NO2. In an environmental context, these values help identify
+whether the average air quality meets safety regulations.
+
+\#Ans to the Question No-2
+
+We have to prepare a QQ Plot for PM10 variable and discuss the
+plausibility of normality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(air}\SpecialCharTok{$}\NormalTok{PM10,}
+       \AttributeTok{main=} \StringTok{"Normal Q{-}Q plot for PM10 Concentration"}\NormalTok{,}
+       \AttributeTok{xlab=} \StringTok{"Theoritical Quantities"}\NormalTok{,}
+       \AttributeTok{ylab=} \StringTok{"Sample Quantities"}\NormalTok{,}
+       \AttributeTok{pch =} \DecValTok{16}\NormalTok{,}
+       \AttributeTok{col=} \StringTok{"navyblue"}
+\NormalTok{       )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{./-Assignment1_files/figure-latex/unnamed-chunk-2-1.pdf}}
+Based on the visual inspection of the Q-Q plot, the assumption of
+normality for the PM10 variable is plausible.
+
+\#Ans to the Question No-3
+
+Presenting Data on Scatterplot \& discussion on the strength NO2 and
+PM10 concentration.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{plot}\NormalTok{(air}\SpecialCharTok{$}\NormalTok{NO2, air}\SpecialCharTok{$}\NormalTok{PM10,}
+     \AttributeTok{main =} \StringTok{"Scatterplot of NO2 vs PM10 Concentrations"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Nitrogen Dioxide (NO2) [ug/m3]"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"Particulate Matter (PM10) [ug/m3]"}\NormalTok{,}
+     \AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkgreen"}
+\NormalTok{       )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{./-Assignment1_files/figure-latex/unnamed-chunk-3-1.pdf}}
+
+The scatterplot shows a weak to moderate association between NO2 and
+PM10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(air}\SpecialCharTok{$}\NormalTok{NO2, air}\SpecialCharTok{$}\NormalTok{PM10)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.3993398
+\end{verbatim}
+
+The calculated linear correlation coefficient is approximately 0.3993398
+` 0.40
+
+This moderate correlation suggests that while NO2 and PM10 may share
+some common emission sources like traffic, other independent factors
+also influence their individual concentrations.
+
+\#Ans to the Question No-4
+
+Applying nonparametric bootstrap using B=2000 replication to estimate
+Standard Error.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{2000}
+\NormalTok{boot\_cor }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(B)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{B) \{}
+\NormalTok{  sample\_indices }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(air), }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  sample\_data }\OtherTok{\textless{}{-}}\NormalTok{ air[sample\_indices, ]}
+\NormalTok{  boot\_cor[i] }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(sample\_data}\SpecialCharTok{$}\NormalTok{NO2, sample\_data}\SpecialCharTok{$}\NormalTok{PM10)}
+\NormalTok{\}}
+\NormalTok{se\_boot }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(boot\_cor)}
+\FunctionTok{round}\NormalTok{(se\_boot, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1354
+\end{verbatim}
+
+The estimated bootstrap standard error is 0.1354 The standard error is
+relatively small compared to the point estimate of 0.3993. This
+indicates that while there is some variability in the data, the
+estimated correlation coefficient is reasonably stable across the
+resampled datasets.
+
+\#Ans to the Question No-5
+
+Computing 90\% Confidence Interval
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{conf\_interval }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(boot\_cor, }\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\FloatTok{0.95}\NormalTok{))}
+\FunctionTok{round}\NormalTok{(conf\_interval, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     5%    95% 
+## 0.1644 0.6133
+\end{verbatim}
+
+Using the bootstrap quantile method, the 90\% confidence interval for
+the linear correlation coefficient is {[}0.1644, 0.6133{]}.
+
+the entire interval is positive and does not contain zero, we can
+conclude that there is a statistically significant positive linear
+association between NO2 and PM10 concentrations at the 90\% confidence
+level.
+
+\#Ans to the Question No-6
+
+Histogram of the bootstrap distribution of the correlation coefficient.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Histogram}
+\FunctionTok{hist}\NormalTok{(boot\_cor, }\AttributeTok{breaks =} \DecValTok{25}\NormalTok{, }\AttributeTok{col =} \StringTok{"lightblue"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Bootstrap Distribution of Correlation Coefficient"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Correlation Coefficient"}\NormalTok{)}
+
+\CommentTok{\# Vertical lines for specific values}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \FloatTok{0.3993}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)                }\CommentTok{\# Original Estimate (from Q3)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \FunctionTok{mean}\NormalTok{(boot\_cor), }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }\CommentTok{\# Bootstrap Mean}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =}\NormalTok{ conf\_interval, }\AttributeTok{col =} \StringTok{"darkgreen"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }\CommentTok{\# 90\% CI Bounds}
+
+\CommentTok{\# Legend}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }
+       \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Original Estimate"}\NormalTok{, }\StringTok{"Bootstrap Mean"}\NormalTok{, }\StringTok{"90\% CI Bounds"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"darkgreen"}\NormalTok{), }
+       \AttributeTok{lty =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{./-Assignment1_files/figure-latex/unnamed-chunk-7-1.pdf}}
+
+Bias: The original estimate and bootstrap mean are nearly identical,
+showing negligible bias.
+
+Bounds: The green vertical lines represent the 90\% confidence interval
+bounds of 0.1644 and 0.6133.
+
+Conclusion: The plot confirms that the correlation is significantly
+greater than zero.
+
+\end{document}
