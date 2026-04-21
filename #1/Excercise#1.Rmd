@@ -1,6 +1,8 @@
 ---
 title: "test rmarkdown"
-output: word_document
+output:
+  html_document:
+    df_print: paged
 date: "2026-03-06"
 ---
 
@@ -29,7 +31,7 @@ plot(pressure)
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 ``` {r}
-survey <- read.csv("C:/Users/USER/Desktop/R_practice/survey.csv")
+survey <- read.csv("D:/R Practice/#Classworks/#Assignment1/survey.csv")
 ```
 
 install.packages("knitr")

@@ -1,0 +1,61 @@
+---
+title: '#Assignment2'
+output:
+  word_document: default
+  html_document: default
+date: "2026-04-21"
+---
+
+2.0 - Loading the dataset profits.Rdata file to check the structure of the variables
+
+```{r}
+load("D:/R Practice/#Classworks/#Assignment2/profits.Rdata")
+str(profits)
+```
+2.1a- Printing the first & last 06 rows- 
+
+```{r}
+head(profits)
+tail(profits)
+```
+
+Printing these rows allows us to verify that the data loaded correctly and to see the initial and final observations of profit margins ($y$) and predictors ($x1, x2$).
+
+2.1b- Sample Size
+
+```{r}
+nrow(profits)
+```
+Sample Size: 500 observations.
+
+Study Type: These data were likely collected in an observational study because researchers are observing firm performance without manipulating their financial strategies.
+
+Random Sample: It could be a random sample if firms were selected independently within the sector to represent the population.
+
+2.1c- Compile to word- Using Knit to word.
+
+2.2- Calculating Descriptive Statistics
+
+```{r}
+summary(profits)
+```
+Comment: The Mean of 500 nos. sample profits is 0.9402 is close to median 0.9637, where it indicates that the distribution of profit is  symmetric. Howerver, wide range from -10.8675 to maximum 12.7202 shows the high variability. 
+
+Net Revenue ($x_1$): The average revenue per deposit dollar is $0.9682$. The presence of negative values (Min: $-3.29$) suggests that some firms are operating at a loss in this metric.Investment Share ($x_2$): This is the most stable variable, with a mean and median nearly identical at $1.988$. The narrow interquartile range indicates that most firms maintain a consistent investment strategy within the sector.
+
+2.3- Creating Plot
+
+```{r}
+# Density plot for Profit Margins
+plot(density(profits$y), main="Empirical Density of Profit Margins", xlab="Profit Margin (y)", col="blue", lwd=2)
+
+# Scatterplot matrix to see relationships
+pairs(profits, main="Scatterplot Matrix of Financial Variables", pch=16, col="darkgrey")
+```
+Empirical Density Plot: The plot of profit margins ($y$) shows a bell-shaped and symmetric distribution. This confirms the previous observation that the mean ($0.9402$) and median ($0.9637$) are nearly identical.
+
+Scatterplot Matrix: This plot visualizes the relationships between profit margins ($y$), revenue ($x_1$), and investments ($x_2$).
+
+Financial Context: There is a visible positive linear trend between net revenue ($x_1$) and profit margins ($y$), suggesting that firms generating more revenue per deposit dollar tend to achieve higher profitability.
+
+Investment Influence: The relationship between investment share ($x_2$) and profits ($y$) appears less defined, indicating that simply increasing investment shares may not guarantee higher profit margins in this sector
