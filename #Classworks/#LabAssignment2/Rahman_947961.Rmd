@@ -1,0 +1,152 @@
+---
+title: "-- Statistical Modeling -- Prof. Fulvia Pennoni"
+author: "Sohanur Rahman 947961  -- s.rahman15@campus.unimib.it --"
+date: "Exercise for the second bonus point"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+header-includes:
+- \setlength{\parindent}{4em}
+- \setlength{\parskip}{2em}
+---
+
+We will use the data file ventilation.Rdata (simulated data) contains data on a set of industrial ventilation systems to solve the problem.
+
+
+## Exercise 1
+
+### 1.1
+
+Univariate Descriptive Statistics Interpretation: 
+
+\
+```{r}
+load("ventilation.Rdata")
+summary(ventilation)
+
+# Optional: Standard deviation for all numeric columns
+sapply(ventilation, sd)
+```
+\
+
+
+Fan Speed (Dependent Variable): The average speed is 91.35, with values ranging from 59 to 134. The proximity of the mean and median (92.00) indicates a symmetric distribution.
+
+System Health (Downtime & Alarms): The systems average 3.29 days of downtime and 13.58 alarms per month. The high standard deviation in alarms (6.12) suggests significant variability in system stability across facilities.
+
+Operating Conditions (Temp & Airflow): The operating temperature is very stable (Mean: 37.77°F, SD: 1.20), while the airflow rate shows more diversity (Mean: 20.48, SD: 4.89).
+
+System Age & Efficiency: The average age is 19.59 years, and the efficiency index is high (Mean: 0.80).
+
+Contextual Insight: The data represents a mature set of equipment (average age ~20 years). The wide range in downtime (Max: 34 days) relative to the mean suggests that while most systems are reliable, a few "outlier" systems require heavy maintenance, which likely impacts their average fan speed.
+
+
+### 1.2
+
+AIC Model Selection: 
+
+\
+```{r}
+# 1. Fit the Full Model (using all variables)
+full_model <- lm(fan_speed ~ ., data = ventilation)
+
+# 2. Perform Stepwise Selection based on AIC
+# 'direction = "both"' allows the algorithm to add or remove variables at each step
+selected_model <- step(full_model, direction = "both", trace = 1)
+
+# 3. View the summary of the final selected model
+summary(selected_model)
+```
+\
+
+Description of AIC: The Akaike Information Criterion (AIC) is a statistical measure used for model selection. It evaluates the trade-off between the goodness of fit and the complexity of the model, penalizing the inclusion of unnecessary variables to prevent overfitting.
+
+Selection Procedure: We started with a full model containing 7 predictors. Through a stepwise procedure, R removed variables that did not contribute significantly to the model’s predictive power. The process stopped when the AIC reached its minimum value of 652.89, indicating the most efficient model.
+
+Excluded Variables: lubricant, age, and efficiency were removed as they did not significantly improve the model.
+
+Selected Model Equation:
+$$\widehat{\text{fan\_speed}} = -182.0068 + 1.0593(\text{downtime}) + 0.3153(\text{alarms}) + 6.5471(\text{temp}) + 0.8940(\text{airflow})$$
+
+
+
+### 1.3
+
+Partial Regression Coefficient:
+
+\
+```{r}
+# Extract coefficients
+summary(selected_model)$coefficients["temp", ]
+
+# Compute 95% Confidence Interval
+confint(selected_model, "temp", level = 0.95)
+```
+\
+
+
+Result: The coefficient for temp is 6.5471. This means that for each 1°F increase in temperature, the fan speed increases by approximately 6.55 units, holding other factors constant.
+
+Significance: The extremely low p-value ($3.66 \times 10^{-10}$) indicates that temperature is a highly significant predictor.
+
+Confidence Interval: The 95% CI is [4.6466, 8.4475]. Since this range is entirely positive and excludes zero, we are 95% confident that the positive impact of temperature on fan speed is real and consistent.
+
+
+### 1.4
+
+Diagnostic Checks(Residual Analysis and Model Diagnostics): 
+
+\
+```{r}
+# Setting up side-by-side plots
+par(mfrow=c(1,2))
+
+# 1. Residuals vs Index (Checking for independence)
+plot(residuals(selected_model), type="p", pch=16, col="darkgrey",
+     main="Residuals vs Index", ylab="Residuals")
+abline(h=0, col="red", lwd=2)
+
+# 2. Residuals vs Fitted Values (Checking for homoscedasticity)
+plot(fitted(selected_model), residuals(selected_model), pch=16, col="blue",
+     main="Residuals vs Fitted", xlab="Fitted Values", ylab="Residuals")
+abline(h=0, col="red", lwd=2)
+```
+\
+
+Homoscedasticity (Constant Variance): In the Residuals vs Fitted plot, the points are scattered randomly around the horizontal red line without forming a clear "funnel" or "fan" shape. This indicates that the assumption of constant variance is satisfied.
+
+Linearity: The lack of any curved or systematic pattern in the residuals suggests that the linear relationship assumed by the model is appropriate for the data.
+
+Independence: The Residuals vs Index plot shows a random distribution with no visible trends or cycles over time/sequence. This confirms that the observations are likely independent.
+
+Deduction: Since the residuals are centered around zero and show no structural patterns, we can conclude that the main underlying assumptions of the multiple linear regression model are well-respected.
+
+
+
+### 1.5
+
+F-statistic and Global Significance: 
+
+\
+```{r}
+# Extract the F-statistic and its p-value from the summary
+f_stat <- summary(selected_model)$fstatistic
+p_val <- pf(f_stat[1], f_stat[2], f_stat[3], lower.tail = FALSE)
+
+# Display the values
+f_stat
+p_val
+```
+\
+
+Hypothesis Tested: The F-test evaluates the Global Null Hypothesis ($H_0: \beta_1 = \beta_2 = \beta_3 = \beta_4 = 0$), which assumes that none of the chosen explanatory variables have a significant effect on fan speed.
+
+Results: The observed F-statistic is 31.47 with $(4, 123)$ degrees of freedom. The resulting p-value is $4.80 \times 10^{-18}$, which is essentially zero.
+
+Conclusion: Since the p-value is much smaller than the 0.05 significance level, we reject the null hypothesis. This confirms that the model is globally significant, meaning the combination of downtime, alarms, temperature, and airflow provides a highly reliable explanation for the variability in fan speed.
+
+
+
+

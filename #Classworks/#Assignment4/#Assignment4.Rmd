@@ -1,0 +1,99 @@
+---
+title: '#Asignment3'
+output: html_document
+date: "2026-04-22"
+---
+
+#Sample Correlation Matrix on profits.Rdata
+
+```{r}
+load("profits.Rdata")
+str(profits)
+```
+#4.1- Sample Correlation Matrix Calculation
+
+```{r}
+cor_matrix <- cor(profits)
+round(cor_matrix, 4)
+```
+Strong Positive Relationship ($y$ and $x_1$): 
+
+There is a very strong positive linear correlation (0.9633) between profit margins ($y$) and net revenue ($x_1$). This indicates that as net revenue per deposit dollar increases, profit margins increase significantly.
+
+Moderate to Strong Relationship ($y$ and $x_2$): The correlation between profit margins ($y$) and investment share ($x_2$) is 0.6168, suggesting a moderate-to-strong positive association.
+
+Inter-predictor Correlation ($x_1$ and $x_2$): Net revenue and investment share are also positively correlated (0.7167).
+
+Conclusion: All variables move in the same direction. The extremely high correlation between $x_1$ and $y$ suggests that net revenue is likely the primary driver of profitability in this sector.
+
+#4.2 (Univariate Plots)
+
+```{r}
+par(mfrow=c(3,3)) # 3 variables x 3 plot types
+
+for (col in colnames(profits)) {
+  # 1. Boxplot
+  boxplot(profits[[col]], main=paste("Boxplot of", col), col="orange")
+  # 2. Histogram
+  hist(profits[[col]], main=paste("Hist of", col), col="lightblue", probability=TRUE)
+  # 3. Density
+  plot(density(profits[[col]]), main=paste("Density of", col), col="red")
+}
+```
+Profit Margins ($y$): The histogram and density plots show a highly symmetric, bell-shaped distribution centered near zero. The boxplot confirms there are no significant outliers, suggesting the data follows a normal distribution.
+
+Net Revenue ($x_1$): Similar to $y$, the distribution for $x_1$ is symmetric. The boxplot shows a well-balanced range, indicating stable revenue observations across the firms.
+
+Investment Share ($x_2$): The distribution is smooth and symmetric. There is no evidence of skewness, and the values are tightly clustered around the mean.
+
+Summary of Differences: All three variables ($y, x_1, x_2$) exhibit Gaussian-like (normal) behavior. The main difference lies in their scales: $y$ has the widest spread (from approx. $-10$ to $15$), while $x_1$ and $x_2$ have much narrower ranges. This symmetry across all variables justifies the use of Pearson correlation in the previous step.
+
+#4.3 (Partial Correlations)
+
+```{r}
+library(ppcor)
+pcor_matrix <- pcor(profits)$estimate
+round(pcor_matrix, 4)
+```
+
+Stable Relationship ($y$ and $x_1$): The partial correlation between profit margins ($y$) and net revenue ($x_1$) remains very strong at 0.9496. This confirms that net revenue is a direct and powerful driver of profits, even after controlling for investment shares.
+
+Significant Change ($y$ and $x_2$): Interestingly, when controlling for net revenue ($x_1$), the correlation between profits ($y$) and investment share ($x_2$) turns negative (-0.3936).
+
+Conclusion: The partial correlation reveals a "suppressor effect," suggesting that while revenue drives profit, excessive investment in other assets ($x_2$) might actually be a cost burden that reduces net margins.
+
+#4.4 Corrplot
+
+```{r}
+library(corrplot)
+# Set up a 1x2 side-by-side plot
+par(mfrow=c(1,2))
+
+# Plot Raw Correlation
+corrplot(cor(profits), method="color", addCoef.col = "black", 
+         tl.col="black", main="\nRaw Correlation")
+
+# Plot Partial Correlation
+corrplot(pcor_matrix, method="color", addCoef.col = "black", 
+         tl.col="black", main="\nPartial Correlation")
+```
+Comparison of Strength: The Raw Correlation plot is dominated by blue tiles, indicating that all variables appear to have positive associations when looked at in pairs.
+
+The $x_1$ and $y$ Relationship: In both plots, the tile for $x_1$ and $y$ remains dark blue (0.96 and 0.95). This confirms that the strong link between net revenue and profit is direct and not influenced by other factors.
+
+The $x_2$ and $y$ Reversal: The most striking difference is the tile for $x_2$ and $y$. In the Raw plot, it is blue (0.62), but in the Partial plot, it turns orange (-0.39).
+
+Visual Conclusion: The color shift from blue to orange visually proves that once we control for revenue ($x_1$), the independent effect of investment share ($x_2$) on profits is actually negative.
+
+#4.5- Scatterplot Matrox
+
+```{r}
+pairs(profits, pch=16, col="darkblue", main="Scatterplot Matrix of Profits Data")
+```
+Linearity: All pairs of variables ($y, x_1, x_2$) show a clear linear association, which justifies the use of Pearson correlation coefficients.
+
+Strongest Relationship ($y$ vs. $x_1$): The plot between profit margins ($y$) and net revenue ($x_1$) shows the tightest clustering of points along a diagonal line. This visually confirms the very high correlation (0.96) found earlier.
+
+Predictor Relationship ($x_1$ vs. $x_2$): The scatterplot between the two predictors ($x_1$ and $x_2$) also shows a positive trend. This explains why the partial correlation was necessary; since the predictors are related, they "share" explanatory power over the profit margin ($y$).
+
+Consistency: No extreme outliers or non-linear patterns (like curves) are visible, suggesting the financial data is well-behaved and the linear model assumptions are appropriate for this sector.
