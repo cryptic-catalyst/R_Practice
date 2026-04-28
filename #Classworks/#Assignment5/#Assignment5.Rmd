@@ -1,0 +1,75 @@
+---
+title: '#Assignment5'
+output: html_document
+date: "2026-04-28"
+---
+loading dataset:
+
+```{r}
+load("school.Rdata")
+```
+
+#5.0- Variable Type
+
+```{r}
+# Print the first 6 rows of the dataframe
+cat("=== FIRST SIX ROWS ===\n")
+head(school)
+
+# Check the structure of the dataframe (variable types)
+cat("\n=== VARIABLE TYPES ===\n")
+str(school)
+
+```
+
+All ddatas are integer type. This is an observational study.
+
+#5.1- Descriptive Statistics
+
+```{r}
+# 5.1 Main descriptive statistics
+summary_stats <- summary(school)
+print(summary_stats)
+
+# Calculate Standard Deviation for each variable
+sapply(school, sd)
+
+# Calculate Coefficient of Variation (SD / Mean) to compare variability
+cv_values <- sapply(school, function(x) (sd(x) / mean(x)) * 100)
+print(cv_values)
+```
+
+Highest Variability: Typically, students or calworks shows the highest variability. students varies wildly because school districts range from small rural areas to massive urban centers.
+
+Explanation: The high variability in calworks (income assistance) reflects the socio-economic disparity across California districts. Some districts are affluent (low assistance), while others face significant economic challenges.
+
+#5.2 Empirical Cumulative Distribution Function (ECDF):
+
+```{r}
+# 5.2 Plot ECDF for each variable
+par(mfrow=c(2,3)) # Arrange plots in a grid
+
+for (col in names(school)) {
+  plot(ecdf(school[[col]]), 
+       main=paste("ECDF of", col), 
+       xlab=col, 
+       ylab="Fn(x)", 
+       col="blue")
+}
+```
+Score: Usually follows a relatively "S-shaped" curve, suggesting a distribution that nears normality.
+
+Income/Students: Often show a steep climb at the start with a long "tail" to the right, indicating right-skewness (many small values, few very high values).
+
+#5.3 Q-Q Plots Comparison:
+
+```{r}
+# 5.3 Q-Q plots in the same graphical window
+par(mfrow=c(2,3)) # 2 rows, 3 columns
+
+for (col in names(school)) {
+  qqnorm(school[[col]], main = paste("Q-Q Plot of", col))
+  qqline(school[[col]], col = "red") # Add a reference line
+}
+```
+The Q-Q plots reveal that most socio-economic variables in the California school dataset (income, expenditure, calworks, and students) are not normally distributed, exhibiting significant right-skewness. This is typical for economic data where a few observations often hold much higher values than the median. In contrast, the score variable is the most symmetric, making it the best candidate for statistical models that assume normality of the response variable.
