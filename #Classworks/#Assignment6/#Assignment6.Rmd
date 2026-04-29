@@ -1,0 +1,46 @@
+---
+title: '#Assignment6'
+output: html_document
+date: "2026-04-28"
+---
+
+#Exercise 6
+
+```{r}
+p6_1_a <- pnorm(7, mean = 5, sd = 2)
+p6_1_b <- pnorm(6, mean = 5, sd = 2) - pnorm(3, mean = 5, sd = 2)
+```
+
+$P(X < 7)$: Since 7 is exactly one standard deviation above the mean ($5 + 2$), this probability corresponds to $\Phi(1) \approx 0.8413$.
+
+$P(3 < X < 6)$: This calculates the area between $-1$ standard deviation and $+0.5$ standard deviations from the mean.
+
+```{r}
+# --- Exercise 6.2 to 6.4: Standard Normal X ~ N(0, 1) ---
+p6_2 <- pnorm(1) - pnorm(-1)
+p6_3 <- pnorm(2) - pnorm(-2)
+p6_4 <- pnorm(3) - pnorm(-3)
+```
+
+6.2: Approximately 68.27% of the data falls within 1 standard deviation.
+
+6.3: Approximately 95.45% of the data falls within 2 standard deviations.
+
+6.4: Approximately 99.73% of the data falls within 3 standard deviations.
+
+```{r}
+# --- Exercise 6.5 & 6.6: Student's t-distribution ---
+p65 <- pt(1, df = 1) - pt(-1, df = 1)
+p66 <- pt(1, df = 10) - pt(-1, df = 10)
+
+cat("6.5: P(-1 < X < 1) for T(df=1) =", p65, "\n")
+cat("6.6: P(-1 < X < 1) for T(df=10) =", p66, "\n")
+```
+
+The Student's t-distribution is "fat-tailed" compared to the Normal distribution.
+
+$T_1$ (Cauchy Distribution): With only 1 degree of freedom, the tails are very heavy. $P(-1 < X < 1)$ is only 0.50, which is significantly lower than the Normal's 0.68. This means there is a much higher probability of finding extreme values (outliers).
+
+$T_{10}$: With 10 degrees of freedom, the distribution starts looking much more like a Normal distribution. The probability $P(-1 < X < 1) \approx 0.659$ is much closer to the standard normal result (0.68).
+
+Conclusion: As the degrees of freedom ($df$) increase, the t-distribution converges to the Standard Normal distribution $N(0,1)$.
