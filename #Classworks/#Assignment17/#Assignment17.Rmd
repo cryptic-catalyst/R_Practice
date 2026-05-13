@@ -1,0 +1,85 @@
+---
+title: '#Assignment17'
+output: html_document
+date: "2026-05-13"
+---
+
+#Excercise 17
+
+1. Descriptive Statistics & Scatterplot Matrix 
+
+```{r}
+load("body.Rdata")
+summary(body)
+```
+
+```{r}
+pairs(body)
+```
+2. Corrplot of Raw and Partial Correlations
+
+```{r}
+install.packages("corrplot")
+library(corrplot)
+cor_matrix <- cor(body)
+
+corrplot(cor_matrix,
+         method = "color",
+         type = "upper")
+```
+
+3. Multiple Linear Regression
+
+```{r}
+model <- lm(brozek ~ age + weight + height +
+              adipos + neck + abdom +
+              hip + thigh + wrist,
+            data = body)
+
+summary(model)
+```
+#t value
+
+```{r}
+summary(model)
+```
+```{r}
+
+estimate = -0.10537
+
+SE = 0.10130
+
+t = -1.040
+lower <- estimate - 1.96*se
+
+upper <- estimate + 1.96*se
+
+lower
+upper
+```
+
+Multicolinearity
+
+```{r}
+library(car)
+
+vif(model)
+```
+
+#Residuals 
+```{r}
+# Fitted values
+fitted_values <- fitted(model)
+
+# Residuals
+residuals_values <- residuals(model)
+
+# Units
+fitted_values[c(23,56,103)]
+
+residuals_values[c(23,56,103)]
+
+# Compare observed vs fitted
+body$brozek[c(23,56,103)]
+```
+

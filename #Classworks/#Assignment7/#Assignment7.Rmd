@@ -3,4 +3,16 @@ title: '#Assignment7'
 output: html_document
 date: "2026-04-28"
 ---
+#Bivariate Normal Distribution and exploring its properties
+
+#7.1 Data Generation and Descriptive Statistics
+
+```{r}
+library(MASS)
+set.seed(625)
+
+#Parameters
+mu <- c(0,0)
+#Variance-Covariance Matrix: Sigma = 
+```
 
